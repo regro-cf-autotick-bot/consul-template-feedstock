@@ -1,6 +1,28 @@
 {% set name = "consul-template" %}
-{% set version = "0.19.0" %}
+{% set version = "0.19.4" %}
 {% set build_number = 0 %}
+{% set sha256_osx = load_file_regex(
+    load_file=name + "_" + version + "_SHA256SUMS",
+    regex_pattern="(?m)^(?P<sha256>[0-9a-f]+)\\s+"+ name + "_" + version + "_darwin_amd64.zip$",
+    from_recipe_dir=True)["sha256"] %}
+{% set sha256_linux32 = load_file_regex(
+    load_file=name + "_" + version + "_SHA256SUMS",
+    regex_pattern="(?m)^(?P<sha256>[0-9a-f]+)\\s+"+ name + "_" + version + "_linux_386.zip$",
+    from_recipe_dir=True)["sha256"] %}
+{% set sha256_linux64 = load_file_regex(
+    load_file=name + "_" + version + "_SHA256SUMS",
+    regex_pattern="(?m)^(?P<sha256>[0-9a-f]+)\\s+"+ name + "_" + version + "_linux_amd64.zip$",
+    from_recipe_dir=True)["sha256"] %}
+{% set sha256_win32 = load_file_regex(
+    load_file=name + "_" + version + "_SHA256SUMS",
+    regex_pattern="(?m)^(?P<sha256>[0-9a-f]+)\\s+"+ name + "_" + version + "_windows_386.zip$",
+    from_recipe_dir=True)["sha256"] %}
+{% set sha256_win64 = load_file_regex(
+    load_file=name + "_" + version + "_SHA256SUMS",
+    regex_pattern="(?m)^(?P<sha256>[0-9a-f]+)\\s+"+ name + "_" + version + "_windows_amd64.zip$",
+    from_recipe_dir=True)["sha256"] %}
+
+
 
 package:
   name: {{ name }}
@@ -13,11 +35,11 @@ source:
   url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_amd64.zip  # [win64]
   url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_386.zip  # [win32]
   fn: {{ name }}-{{ version }}.zip
-  sha256: b968741c4f5652a5ca85535885a2982bbfc8a7a8981a6add7144ceaa758bbb0b  # [osx]
-  sha256: 7622079b3514ebe3ca8791e6e44ffed9aaa94562a32bbb65d1a517bc360bafe8  # [linux32]
-  sha256: 31dda6ebc7bd7712598c6ac0337ce8fd8c533229887bd58e825757af879c5f9f  # [linux64]
-  sha256: 1d14eab767b9b9424b2a05590fb138dbf5e0fe84d863d6d7586a504a03a18350  # [win32]
-  sha256: 545023d90773b6de686558f790d07ccd052b9d5517cb2daeadfaf6b0cc09aea3  # [win64]
+  sha256: {{ sha256_osx }}  # [osx]
+  sha256: {{ sha256_linux32 }}  # [linux32]
+  sha256: {{ sha256_linux64 }}  # [linux64]
+  sha256: {{ sha256_win32 }}  # [win32]
+  sha256: {{ sha256_win64 }}  # [win64]
 
 build:
   number: {{ build_number }}
