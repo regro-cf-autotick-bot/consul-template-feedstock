@@ -22,9 +22,8 @@ git commit -m "conda build of $PKG_NAME-v$PKG_VERSION"
 git tag v${PKG_VERSION}
 
 # Build
-make
-
-# This is a misnomer, it will still build the distro
+make bootstrap
+make deps
 make dev
 
 # Install Binary into PREFIX/bin
