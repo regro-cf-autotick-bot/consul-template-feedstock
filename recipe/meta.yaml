@@ -1,30 +1,39 @@
 {% set name = "consul-template" %}
-{% set version = "0.19.0" %}
+{% set version = "0.19.4" %}
 {% set build_number = 0 %}
 
+{% set sha256 = "97290bd7621560bdada4bb4dba6195638d57f122161ef0429f626a5ea0a204cc" %}
+{% set sha256_win32 = "ccbaa19a8dff77c197dbcec44b1636a2ed9994f3c2b5bca109dee49613eb92e6" %}
+{% set sha256_win64 = "5c88df6a8cb00cc2cbef82c756c4c6965613a7c37eea3ab2a7a2110b64cf114e" %}
+
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_linux_amd64.zip  # [linux64]
-  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_linux_386.zip  # [linux32]
-  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_darwin_amd64.zip  # [osx]
-  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_amd64.zip  # [win64]
+  url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz  # [not win]
+  fn: {{ name }}-{{ version }}.tar.gz  # [not win]
+  sha256: {{ sha256 }}  # [not win]
+
   url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_386.zip  # [win32]
-  fn: {{ name }}-{{ version }}.zip
-  sha256: b968741c4f5652a5ca85535885a2982bbfc8a7a8981a6add7144ceaa758bbb0b  # [osx]
-  sha256: 7622079b3514ebe3ca8791e6e44ffed9aaa94562a32bbb65d1a517bc360bafe8  # [linux32]
-  sha256: 31dda6ebc7bd7712598c6ac0337ce8fd8c533229887bd58e825757af879c5f9f  # [linux64]
-  sha256: 1d14eab767b9b9424b2a05590fb138dbf5e0fe84d863d6d7586a504a03a18350  # [win32]
-  sha256: 545023d90773b6de686558f790d07ccd052b9d5517cb2daeadfaf6b0cc09aea3  # [win64]
+  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_amd64.zip  # [win64]
+  fn: {{ name }}-{{ version }}.zip  # [win]
+  sha256: {{ sha256_win32 }}  # [win32]
+  sha256: {{ sha256_win64 }}  # [win64]
 
 build:
   number: {{ build_number }}
 
+requirements:
+  build:
+    - go 1.9.3  # [not win]
+    - git  # [not win]
+    - make  # [not win]
+    - toolchain  # [not win]
+
 test:
   commands:
-    - {{ name }} -v
+    - {{ name|lower }} -v
 
 about:
   home: https://github.com/hashicorp/consul-tempate
