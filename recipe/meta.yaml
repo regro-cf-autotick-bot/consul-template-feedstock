@@ -1,8 +1,8 @@
 {% set name = "consul-template" %}
-{% set version = "0.19.4" %}
+{% set version = "0.19.5" %}
 {% set build_number = 0 %}
 
-{% set sha256 = "97290bd7621560bdada4bb4dba6195638d57f122161ef0429f626a5ea0a204cc" %}
+{% set sha256 = "01a2d2979623efb95067251b569cc2020b36fbfafdca0e9cd6b4fb7f14805712" %}
 {% set sha256_win32 = "ccbaa19a8dff77c197dbcec44b1636a2ed9994f3c2b5bca109dee49613eb92e6" %}
 {% set sha256_win64 = "5c88df6a8cb00cc2cbef82c756c4c6965613a7c37eea3ab2a7a2110b64cf114e" %}
 
