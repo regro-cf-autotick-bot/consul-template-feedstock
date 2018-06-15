@@ -1,10 +1,5 @@
 {% set name = "consul-template" %}
 {% set version = "0.19.5" %}
-{% set build_number = 0 %}
-
-{% set sha256 = "01a2d2979623efb95067251b569cc2020b36fbfafdca0e9cd6b4fb7f14805712" %}
-{% set sha256_win32 = "ccbaa19a8dff77c197dbcec44b1636a2ed9994f3c2b5bca109dee49613eb92e6" %}
-{% set sha256_win64 = "5c88df6a8cb00cc2cbef82c756c4c6965613a7c37eea3ab2a7a2110b64cf114e" %}
 
 package:
   name: {{ name|lower }}
@@ -13,16 +8,14 @@ package:
 source:
   url: https://github.com/hashicorp/{{ name }}/archive/v{{ version }}.tar.gz  # [not win]
   fn: {{ name }}-{{ version }}.tar.gz  # [not win]
-  sha256: {{ sha256 }}  # [not win]
+  sha256: d10dbd1f332f1882c433f410a0704a84de405ba3068f285f9c23704701ee3d73  # [not win]
 
-  url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_386.zip  # [win32]
   url: https://releases.hashicorp.com/{{ name }}/{{ version }}/{{ name }}_{{ version }}_windows_amd64.zip  # [win64]
   fn: {{ name }}-{{ version }}.zip  # [win]
-  sha256: {{ sha256_win32 }}  # [win32]
-  sha256: {{ sha256_win64 }}  # [win64]
+  sha256: 01a2d2979623efb95067251b569cc2020b36fbfafdca0e9cd6b4fb7f14805712  # [win64]
 
 build:
-  number: {{ build_number }}
+  number: 0
 
 requirements:
   build:
